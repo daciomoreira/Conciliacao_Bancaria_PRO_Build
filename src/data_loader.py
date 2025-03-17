@@ -1,5 +1,7 @@
 import pandas as pd
-import ofxparse
+# Substituir importação direta de ofxparse pela nossa versão personalizada
+# import ofxparse
+from src.custom_ofx.ofx_parser import parse_ofx
 from io import BytesIO
 import re
 from datetime import datetime
@@ -22,7 +24,8 @@ def ler_ofx(arquivo_ofx):
                     # Se chegou aqui, a decodificação funcionou
                     # Converter de volta para bytes para o ofxparse
                     ofx_bytes = BytesIO(decoded_content.encode('ascii', 'replace'))
-                    ofx = ofxparse.OfxParser.parse(ofx_bytes)
+                    # Substituir ofxparse.OfxParser.parse pelo nosso parse_ofx
+                    ofx = parse_ofx(ofx_bytes)
                     
                     # Se chegou aqui sem erros, encontramos a codificação correta
                     break
@@ -32,12 +35,14 @@ def ler_ofx(arquivo_ofx):
             else:
                 # Se todas as codificações falharem, tentar diretamente com os bytes originais
                 ofx_bytes = BytesIO(conteudo)
-                ofx = ofxparse.OfxParser.parse(ofx_bytes)
+                # Substituir ofxparse.OfxParser.parse pelo nosso parse_ofx
+                ofx = parse_ofx(ofx_bytes)
         except Exception as e:
             # Se ainda falhar, tentar uma abordagem alternativa
             arquivo_ofx.seek(0)
             ofx_bytes = BytesIO(arquivo_ofx.read())
-            ofx = ofxparse.OfxParser.parse(ofx_bytes)
+            # Substituir ofxparse.OfxParser.parse pelo nosso parse_ofx
+            ofx = parse_ofx(ofx_bytes)
         
         transacoes = []
         for transacao in ofx.account.statement.transactions:

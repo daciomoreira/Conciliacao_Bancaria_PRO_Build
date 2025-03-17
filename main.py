@@ -699,11 +699,12 @@ def main():
     st.markdown('<div id="sobre"></div>', unsafe_allow_html=True)
     st.markdown("## 🛄 Sobre")
     st.markdown("""
-    **Conciliação Bancária Automática por IA**  
+    **Conciliação Bancária Automática por IA**    
     Versão 3.1.2
+    
     Desenvolvido por: **Dácio - KAPEX Assessoria Empresarial**  
     Suporte: controladoria@kapex.com.br
-
+    
     Copyright © 2025. Todos os direitos reservados.
     """)
 
